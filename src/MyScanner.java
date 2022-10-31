@@ -34,7 +34,7 @@ public class MyScanner {
 
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
-                List<String> tokens = tokenize(line);
+                List<String> tokens = getTokens(line);
 
                 for (String token : tokens) {
                     if (language.isAReservedWord(token) || language.isAnOperator(token) || language.isASeparator(token)) {
@@ -76,7 +76,7 @@ public class MyScanner {
         }
     }
 
-    public ArrayList<String> tokenize(String line) {
+    public ArrayList<String> getTokens(String line) {
         ArrayList<String> tokens = new ArrayList<>();
 
         String regex = String.join("|", language.getOperatorsForRegex());
