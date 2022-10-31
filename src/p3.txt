@@ -1,0 +1,14 @@
+var
+sum, i, n, number: integer;
+begin
+read n;
+i:=0;
+sum:=0;
+while (i<n) do
+begin
+read number;
+sum:=sum+number;
+i:=i+1;
+end;
+write(sum);
+end

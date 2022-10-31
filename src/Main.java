@@ -1,21 +1,28 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
-        SymbolTable symbolTable = new SymbolTable(7);
 
-
-        String[] symbols = {"a1", "1a", "b2", "c3", "d4", "a1", "b5"};
-
-        for (String symbol : symbols) {
-            symbolTable.addSymbol(symbol);
-            System.out.println(symbolTable.addSymbol(symbol));
-        }
-        System.out.println(symbolTable.hashArray);
-
-        for (String symbol : symbols) {
-            System.out.println(symbolTable.isInTable(symbol));
-        }
+        System.out.println("---------------Problem 1----------------------");
+        MyScanner scanner = new MyScanner("src/p1.txt");
+        scanner.scan();
+        System.out.println("----------------Problem 2---------------------");
+        MyScanner scanner2 = new MyScanner("src/p2.txt");
+        scanner2.scan();
+        System.out.println("-------------------Problem 3------------------");
+        MyScanner scanner3 = new MyScanner("src/p3.txt");
+        scanner3.scan();
+        System.out.println("------------------Problem error-------------------");
+        MyScanner scannerErr = new MyScanner("src/p1err.txt");
+        scannerErr.scan();
 
 
     }
+
+
+
 }

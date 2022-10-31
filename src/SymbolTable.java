@@ -36,4 +36,20 @@ public class SymbolTable {
 
         return new Pair(hash(symbol), hashArray.get(hash(symbol)).indexOf(symbol));
     }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (int i=0; i<size; ++i) {
+            result.append(i).append(": [");
+            String separator = "";
+            for(String element: hashArray.get(i)){
+                result.append(separator);
+                separator = ", ";
+                result.append(element);
+            }
+            result.append("]\n");
+        }
+        return result.toString();
+    }
 }
