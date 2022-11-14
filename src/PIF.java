@@ -30,6 +30,7 @@ public class PIF {
         for (Pair<Integer, Pair<Integer, Integer>> pair : tuples) {
             result.append(pair.getFirst()).append(" -> (").append(pair.getSecond().getFirst()).append(", ").append(pair.getSecond().getSecond()).append(")\n");
         }
+        result.append("\n-------------\n");
         return result.toString();
     }
 }

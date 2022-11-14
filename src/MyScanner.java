@@ -2,10 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class MyScanner {
     private final SymbolTable identifiers;
@@ -16,11 +13,11 @@ public class MyScanner {
 
     private final String path;
 
-    public MyScanner(String path) {
+    public MyScanner(String path) throws FileNotFoundException {
         this.identifiers = new SymbolTable(13);
         this.constants = new SymbolTable(13);
         this.pif = new PIF();
-        this.language = new Language();
+        this.language = new Language("src/token.in");
         this.path = path;
     }
 
@@ -38,11 +35,15 @@ public class MyScanner {
 
                 for (String token : tokens) {
                     if (language.isAReservedWord(token) || language.isAnOperator(token) || language.isASeparator(token)) {
-                        pif.addReservedWord(token);
+                        if(!Objects.equals(token, " ")){
+                            pif.addReservedWord(token);
+                        }
+
                     } else if (language.isIdentifier(token)) {
                         identifiers.addSymbol(token);
                         Pair pos = identifiers.getPositionByElement(token);
                         pif.addIdentifier(pos);
+
 
                     } else if (language.isConstant(token)) {
                         constants.addSymbol(token);
@@ -60,12 +61,12 @@ public class MyScanner {
             reader.close();
             if (isOk) {
                 System.out.println("Passed check\n" + pif + "Identifiers:\n" + identifiers + "\n\nConstants\n" + constants);
-                FileWriter myWriter = new FileWriter("src/PIF.out");
+                FileWriter myWriter = new FileWriter("src/PIF.out", true);
                 myWriter.write("" + pif);
                 myWriter.close();
 
-                FileWriter myWriter2 = new FileWriter("src/ST.out");
-                myWriter2.write("Identifier ST:\n" + identifiers + "\n\nConstants ST:\n" + constants);
+                FileWriter myWriter2 = new FileWriter("src/ST.out", true);
+                myWriter2.write("Identifiers:\n" + identifiers + "\n\nConstants:\n" + constants);
                 myWriter2.close();
             }
 
@@ -85,7 +86,6 @@ public class MyScanner {
 
         regex = "((?=(" + regex + "))|(?<=(" + regex + ")))";
         String[] result = line.split(regex);
-
         for (int i = 0; i < result.length; i++) {
             if (i + 1 < result.length) {
                 if (Objects.equals(result[i], ":") || Objects.equals(result[i], "!") || Objects.equals(result[i], "<") || Objects.equals(result[i], ">")) {
@@ -94,7 +94,7 @@ public class MyScanner {
                         i = i + 1;
                     } else tokens.add(result[i]);
                 } else if (i - 1 >= 0) {
-                    if (language.isAnOperator(result[i - 1])) {
+                    if (language.isAnOperator(result[i - 1]) ) {
                         if (Objects.equals(result[i], "+") || Objects.equals(result[i], "-")) {
                             if (language.isANumber(result[i + 1])) {
                                 tokens.add(result[i] + result[i + 1]);
@@ -106,6 +106,7 @@ public class MyScanner {
             } else tokens.add(result[i]);
         }
         return tokens;
+
     }
 }
 
