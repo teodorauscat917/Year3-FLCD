@@ -63,7 +63,7 @@ public class FiniteAutomaton {
         return builder.toString();
     }
 
-    public String printStates(){
+    public String writeStates(){
         StringBuilder builder = new StringBuilder();
         builder.append("States: ");
         for (String s : states){
@@ -87,13 +87,41 @@ public class FiniteAutomaton {
         StringBuilder builder = new StringBuilder();
         builder.append("Transitions: \n");
         transitions.forEach((K, V) -> {
-            builder.append("(").append(K.first).append(",").append(K.second).append(") = ").append(V).append("\n");
+            builder.append("<").append(K.key).append(",").append(K.value).append("> -> ").append(V).append("\n");
         });
 
         return builder.toString();
     }
 
+    public boolean checkIfDFA(){
+        for (Pair<String, String> p : transitions.keySet()) {
+            if (transitions.get(p).size() > 1) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    public boolean checkSequence(String sequence){
+        if(sequence.length() == 0)
+            return finalStates.contains(initialState);
+
+        String currentState = initialState, s = "";
+        Pair p;
+        for (int i = 0; i < sequence.length(); i += 1) {
+            s = String.valueOf(sequence.charAt(i));
+            p = new Pair(currentState, s);
+
+            try {
+                if (!transitions.get(p).isEmpty()) {
+                    currentState = transitions.get(p).iterator().next();
+                }
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return finalStates.contains(currentState);
+    }
 
     @Override
     public String toString() {

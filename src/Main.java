@@ -20,10 +20,9 @@ public class Main {
         optionsForDFA();
 
 
-
-
     }
-    private static void runMenu(){
+
+    private static void runMenu() {
         System.out.println("1. States");
         System.out.println("2. Alphabet");
         System.out.println("3. Final states.");
@@ -32,7 +31,7 @@ public class Main {
         System.out.println("0. Exit");
     }
 
-    private static void optionsForDFA(){
+    private static void optionsForDFA() {
         FiniteAutomaton finiteAutomaton = new FiniteAutomaton("src/FiniteAutomata.in");
 
         System.out.println("FA read from file.");
@@ -42,14 +41,25 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int option = scanner.nextInt();
 
-        while(option != 0) {
+        while (option != 0) {
             switch (option) {
-                case 1 -> System.out.println(finiteAutomaton.printStates());
+                case 1 -> System.out.println(finiteAutomaton.writeStates());
                 case 2 -> System.out.println(finiteAutomaton.writeAlphabet());
                 case 3 -> System.out.println(finiteAutomaton.writeFinalStates());
                 case 4 -> System.out.println(finiteAutomaton.writeTransitions());
                 case 5 -> {
+                    if (finiteAutomaton.checkIfDFA()) {
+                        System.out.println("Your sequence: ");
+                        Scanner scanner2 = new Scanner(System.in);
+                        String sequence = scanner2.nextLine();
 
+                        if (finiteAutomaton.checkSequence(sequence))
+                            System.out.println("Sequence is valid");
+                        else
+                            System.out.println("Invalid sequence");
+                    } else {
+                        System.out.println("FA is not deterministic.");
+                    }
                 }
             }
             System.out.println();
@@ -58,7 +68,6 @@ public class Main {
             option = scanner.nextInt();
         }
     }
-
 
 
 }

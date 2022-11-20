@@ -28,7 +28,7 @@ public class PIF {
 
         StringBuilder result = new StringBuilder();
         for (Pair<Integer, Pair<Integer, Integer>> pair : tuples) {
-            result.append(pair.getFirst()).append(" -> (").append(pair.getSecond().getFirst()).append(", ").append(pair.getSecond().getSecond()).append(")\n");
+            result.append(pair.getKey()).append(" -> (").append(pair.getValue().getKey()).append(", ").append(pair.getValue().getValue()).append(")\n");
         }
         result.append("\n-------------\n");
         return result.toString();
