@@ -1,0 +1,11 @@
+var
+a,b,c: integer;
+max: integer;
+begin
+read a,b,c;
+if (max<a) then begin max:=a; end;
+if (max<b) then begin max:=b; end;
+if (max<c) then begin max:=c; end;
+write('Max');
+write(max);
+end

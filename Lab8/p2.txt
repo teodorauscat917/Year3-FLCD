@@ -1,0 +1,13 @@
+var
+a,b,r,z: integer;
+begin
+read a,b,c;
+while (b >= 0) do
+begin
+r = a % b;
+a = b;
+b = r;
+end;
+write('gcd');
+write(a);
+end
